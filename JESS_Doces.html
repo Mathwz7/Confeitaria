@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style_Jess.css">
+<title>Jess Doces e Salgados</title>
+
+</head>
+
+<body>
+
+    <header>
+        <h1>🍓 Jess Doces e Salgados</h1>
+        <p>Feitos com carinho para adoçar seu dia!</p>
+    </header>
+
+    <nav>
+        <a href="#inicio">Início</a>
+        <a href="#produtos">Produtos</a>
+        <a href="#carrinho">Carrinho</a>
+    </nav>
+
+    <section class="banner" id="inicio">
+        <h2>Bem-vindo à nossa loja!</h2>
+        <p>Escolha seus doces favoritos e faça seu pedido.</p>
+    </section>
+
+    <section class="container" id="produtos">
+
+        <h2>🍬 Nossos Produtos</h2>
+
+        <div class="produtos" id="listaProdutos"></div>
+
+        <section class="carrinho" id="carrinho">
+
+            <h2>🛒 Meu Carrinho</h2>
+
+            <div id="itensCarrinho">
+                Seu carrinho está vazio.
+            </div>
+
+            <div class="total">
+                Total: R$ <span id="total">0.00</span>
+            </div>
+
+            <button class="finalizar" onclick="finalizarPedido()">
+                Finalizar pedido pelo WhatsApp
+            </button>
+
+        </section>
+
+    </section>
+
+    <footer>
+        <p>Jess Doces e Salgados © 2026</p>
+        <p>Obrigado pela preferência! ❤️</p>
+    </footer>
+
+    <script>
+
+    // 1. CADASTRO DOS PRODUTOS
+
+    const produtos = [
+        {
+            id: 1,
+            nome: "Brigadeiro",
+            preco: 3.00,
+            imagem: "https://images.unsplash.com/photo-1581798459219-318e76aecc7b?w=500"
+        },
+        {
+            id: 2,
+            nome: "Beijinho",
+            preco: 3.00,
+            imagem: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=500"
+        },
+        {
+            id: 3,
+            nome: "Brownie",
+            preco: 7.00,
+            imagem: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=500"
+        },
+        {
+            id: 4,
+            nome: "Cupcake",
+            preco: 6.00,
+            imagem: "https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=500"
+        },
+        {
+            id: 5,
+            nome: "Donuts",
+            preco: 5.00,
+            imagem: "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=500"
+        },
+        {
+            id: 6,
+            nome: "Bolo de chocolate",
+            preco: 10.00,
+            imagem: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500"
+        }
+    ];
+
+    // 2. CARRINHO DE COMPRAS
+
+    let carrinho = [];
+
+    // 3. MOSTRAR PRODUTOS NA TELA
+
+    function mostrarProdutos() {
+
+        const lista = document.getElementById("listaProdutos");
+
+        lista.innerHTML = "";
+
+        produtos.forEach(produto => {
+
+            lista.innerHTML += `
+                <div class="produto">
+
+                    <img src="${produto.imagem}"
+                        alt="${produto.nome}">
+
+                    <h3>${produto.nome}</h3>
+
+                    <p>R$ ${produto.preco.toFixed(2)}</p>
+
+                    <button onclick="adicionarCarrinho(${produto.id})">
+                        Adicionar ao carrinho
+                    </button>
+
+                </div>
+            `;
+
+        });
+
+    }
+
+    // 4. ADICIONAR PRODUTOS AO CARRINHO
+
+    function adicionarCarrinho(id) {
+
+        const produto = produtos.find(p => p.id === id);
+
+        const item = carrinho.find(p => p.id === id);
+
+        if (item) {
+            item.quantidade++;
+        } else {
+            carrinho.push({
+                ...produto,
+                quantidade: 1
+            });
+        }
+
+        atualizarCarrinho();
+
+    }
+
+    // 5. REMOVER PRODUTOS
+
+    function removerCarrinho(id) {
+
+        const item = carrinho.find(p => p.id === id);
+
+        if (item.quantidade > 1) {
+            item.quantidade--;
+        } else {
+            carrinho = carrinho.filter(p => p.id !== id);
+        }
+
+        atualizarCarrinho();
+
+    }
+
+    // 6. ATUALIZAR CARRINHO E VALOR TOTAL
+
+    function atualizarCarrinho() {
+
+        const lista = document.getElementById("itensCarrinho");
+
+        const totalElemento = document.getElementById("total");
+
+        lista.innerHTML = "";
+
+        let total = 0;
+
+        if (carrinho.length === 0) {
+            lista.innerHTML = "Seu carrinho está vazio.";
+        }
+
+        carrinho.forEach(item => {
+
+            const subtotal = item.preco * item.quantidade;
+
+            total += subtotal;
+
+            lista.innerHTML += `
+
+                <div class="item">
+
+                    <span>
+                        ${item.nome} (${item.quantidade}x)
+                        - R$ ${subtotal.toFixed(2)}
+                    </span>
+
+                    <button onclick="removerCarrinho(${item.id})">
+                        Remover
+                    </button>
+
+                </div>
+
+            `;
+
+        });
+
+        totalElemento.textContent = total.toFixed(2);
+
+    }
+
+    // 7. FINALIZAR PEDIDO
+
+    function finalizarPedido() {
+
+        if (carrinho.length === 0) {
+            alert("Adicione algum produto ao carrinho!");
+            return;
+        }
+
+        const nome = prompt("Digite seu nome:");
+
+        if (!nome || !nome.trim()) {
+            alert("Digite seu nome para continuar.");
+            return;
+        }
+
+        let mensagem = `Olá! Meu nome é ${nome}.\n\n`;
+        mensagem += "Gostaria de fazer o seguinte pedido:\n\n";
+
+        let total = 0;
+
+        carrinho.forEach(item => {
+
+            let subtotal = item.preco * item.quantidade;
+
+            total += subtotal;
+
+            mensagem += `${item.nome} - ${item.quantidade}x - R$ ${subtotal.toFixed(2)}\n`;
+
+        });
+
+        mensagem += `\nTotal: R$ ${total.toFixed(2)}`;
+
+        const telefone = "5511974312473";
+
+        const link = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
+
+        window.location.assign(link);
+
+    }
+
+
+    mostrarProdutos();
+
+    </script>
+
+</body>
+</html>
+git remote set-url origin https://github.com/Mathwz7/Confeitaria.git
+  git config --global user.email "matheusgtescola@gmail.com"

@@ -1,0 +1,159 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #fff8f5;
+    color: #442c2c;
+}
+
+/* CABEÇALHO */
+header {
+    background: #8e354b;
+    color: white;
+    padding: 22px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 28px;
+}
+
+header p {
+    margin-top: 8px;
+}
+
+/* MENU */
+nav {
+    background: #f5d6d8;
+    padding: 15px;
+    text-align: center;
+}
+
+nav a {
+    color: #702c40;
+    text-decoration: none;
+    margin: 0 12px;
+    font-weight: bold;
+}
+
+/* APRESENTAÇÃO */
+.banner {
+    text-align: center;
+    padding: 45px 15px;
+}
+
+.banner h2 {
+    color: #8e354b;
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+/* PRODUTOS */
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
+
+.container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.produtos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.produto {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px #00000015;
+    text-align: center;
+    padding-bottom: 18px;
+}
+
+.produto img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.produto h3 {
+    margin: 12px;
+}
+
+.produto p {
+    color: #8e354b;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+button {
+    background: #8e354b;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #672438;
+}
+
+/* CARRINHO */
+.carrinho {
+    background: white;
+    margin-top: 35px;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #00000015;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.item button {
+    padding: 5px 10px;
+}
+
+.total {
+    text-align: right;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 20px 0;
+    color: #8e354b;
+}
+
+.finalizar {
+    width: 100%;
+    background: #218838;
+    font-size: 16px;
+}
+
+.finalizar:hover {
+    background: #176b2b;
+}
+
+/* RODAPÉ */
+footer {
+    margin-top: 40px;
+    background: #8e354b;
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
